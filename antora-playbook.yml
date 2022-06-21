@@ -1,0 +1,29 @@
+site:
+  title: Notes
+  url: https://menou.fr/notes
+  start_page: component-workshop-terraform::terraform-intro.adoc
+  robots: disallow
+antora:
+  extensions:
+    - '@antora/lunr-extension'
+asciidoc:
+  extensions:
+    - asciidoctor-kroki
+  attributes:
+    experimental: ''
+    idprefix: ''
+    idseparator: '-'
+    page-pagination: ''
+    caution-caption: 'MISE EN GARDE'
+    warning-caption: 'ATTENTION'
+    kroki-fetch-diagram: true
+content:
+  sources:
+  - url: https://github.com/EtnMn/workshop-terraform
+    branches: HEAD
+    start_path: docs
+ui:
+  bundle:
+    url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
+    snapshot: true
+  supplemental_files: ./supplemental-ui

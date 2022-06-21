@@ -1,0 +1,61 @@
+= Notes
+// Settings:
+// Project URLs
+:url-project: https://menou.fr/notes
+:url-github: https://github.com/EtnMn
+:url-repo: {url-github}/notes
+:url-actions: {url-repo}/tree/main/.github/workflows
+:url-docs: https://docs.antora.org
+:url-install: {url-docs}/antora/latest/install/install-antora/
+
+ifdef::env-github[]
+image:https://github.com/etnmn/notes/actions/workflows/publish.yml/badge.svg[Deploy Status,link={url-actions}]
+endif::[]
+
+This repository contains the playbook project for an Antora documentation site published at {url-project}.
+
+== Site structure
+
+The site uses the Antora Default UI to generate its UI (i.e., the web pages).
+
+== Quick start
+
+To generate the Notes site, you first need to {url-install}[install Antora].
+Once Antora is installed, run the `antora` command on the playbook file hosted in this repository.
+
+ $ npx antora antora-playbook.yml
+
+The first time Antora runs, it caches any remote content sources git repositories and UI bundles.
+On subsequent runs, Antora resolves these resources in the cache folder, effectively running offline.
+You can tell Antora to refresh the cache by setting the https://docs.antora.org/antora/latest/playbook/runtime-fetch/#fetch-option[fetch] option.
+
+ $ npx antora --fetch antora-playbook.yml
+
+To use local content repository, antora permits the value of url to be a relative or absolute filesystem path.
+
+----
+sources:
+  - url: ../notes
+    branches: HEAD
+    start_path: docs
+----
+
+The site will be generated into _build/_.
+Navigate to _build/index.html_ in your browser to view the site offline.
+
+== Hosting
+
+Antora is designed to create sites that run anywhere, whether it be on a static web host or the local filesystem.
+However, some hosts offer "`features`" that mess with Antora's output.
+https://docs.antora.org/antora/latest/publish-to-github-pages/[GitHub Pages] is one of those hosts.
+
+This site is hosted on {url-repo}[GitHub Pages].
+
+Deployment is triggered by a push on the main branch of the git repository and repository dispatch event. The default `GITHUB_TOKEN` does not have scopes to do this so a `repo` scoped https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token[PAT] created on a user with *write* access to the target repository is required. If you will be dispatching to a public repository then you can use the more limited `public_repo` scope.
+
+The {url-actions}[deploy job] is configured by the file _publish.yml_.
+
+== Copyright and License
+
+All files are released under the MIT license.
+See link:LICENSE[] to view the full license text.

@@ -1,0 +1,33 @@
+{
+  "name": "notes",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EtnMn/notes.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EtnMn/notes/issues"
+  },
+  "homepage": "https://github.com/EtnMn/notes#readme",
+  "devDependencies": {
+    "@antora/cli": "3.0.1",
+    "@antora/site-generator": "3.0.1",
+    "@commitlint/cli": "^17.0.2",
+    "@commitlint/config-conventional": "^17.0.2",
+    "husky": "^8.0.0",
+    "validate-branch-name": "^1.3.0"
+  },
+  "dependencies": {
+    "@antora/lunr-extension": "^1.0.0-alpha.8",
+    "asciidoctor": "^2.2.6",
+    "asciidoctor-kroki": "^0.15.4"
+  }
+}
