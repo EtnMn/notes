@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Introduction à Terraform :: Notes</title>
+    <link rel="canonical" href="https://menou.fr/notes/component-workshop-terraform/main/terraform-intro.html">
+    <link rel="next" href="setup.html">
+    <meta name="description" content="Introduction à Terraform pour une utilisation dans le cadre d'Azure.">
+    <meta name="generator" content="Antora 3.0.1">
+    <link rel="stylesheet" href="../../_/css/site.css">
+    <script>var uiRootPath = '../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <img class="navbar-item" src="../../_/img/logo.png" alt="logo" width="32" height="32">
+      <a class="navbar-item" href="https://menou.fr/notes">Notes</a>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Rechercher" autofocus>
+        </div>
+      </div>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/EtnMn">
+          <span class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" aria-labelledby="title" aria-describedby="desc" role="img" xmlns:xlink="http://www.w3.org/1999/xlink">
+              <title>My Github</title>
+              <path data-name="layer2" d="M32 0a32.021 32.021 0 0 0-10.1 62.4c1.6.3 2.2-.7 2.2-1.5v-6c-8.9 1.9-10.8-3.8-10.8-3.8-1.5-3.7-3.6-4.7-3.6-4.7-2.9-2 .2-1.9.2-1.9 3.2.2 4.9 3.3 4.9 3.3 2.9 4.9 7.5 3.5 9.3 2.7a6.93 6.93 0 0 1 2-4.3c-7.1-.8-14.6-3.6-14.6-15.8a12.27 12.27 0 0 1 3.3-8.6 11.965 11.965 0 0 1 .3-8.5s2.7-.9 8.8 3.3a30.873 30.873 0 0 1 8-1.1 30.292 30.292 0 0 1 8 1.1c6.1-4.1 8.8-3.3 8.8-3.3a11.965 11.965 0 0 1 .3 8.5 12.1 12.1 0 0 1 3.3 8.6c0 12.3-7.5 15-14.6 15.8a7.746 7.746 0 0 1 2.2 5.9v8.8c0 .9.6 1.8 2.2 1.5A32.021 32.021 0 0 0 32 0z" fill="#FFF"></path>
+              <path data-name="layer1" d="M12.1 45.9c-.1.2-.3.2-.5.1s-.4-.3-.3-.5.3-.2.6-.1c.2.2.3.4.2.5zm1.3 1.5a.589.589 0 0 1-.8-.8.631.631 0 0 1 .7.1.494.494 0 0 1 .1.7zm1.3 1.8a.585.585 0 0 1-.7-.3.6.6 0 0 1 0-.8.585.585 0 0 1 .7.3c.2.3.2.7 0 .8zm1.7 1.8c-.2.2-.5.1-.8-.1-.3-.3-.4-.6-.2-.8a.619.619 0 0 1 .8.1.554.554 0 0 1 .2.8zm2.4 1c-.1.3-.4.4-.8.3s-.6-.4-.5-.7.4-.4.8-.3c.3.2.6.5.5.7zm2.6.2c0 .3-.3.5-.7.5s-.7-.2-.7-.5.3-.5.7-.5c.4.1.7.3.7.5zm2.4-.4q0 .45-.6.6a.691.691 0 0 1-.8-.3q0-.45.6-.6c.5-.1.8.1.8.3z" fill="#FFF"></path>
+            </svg>
+          </span>
+        </a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="component-workshop-terraform" data-version="main">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="terraform-intro.html">Workshop Terraform</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="terraform-intro.html">Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="setup.html">Mise en place</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="create-resources.html">Créer des ressources</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Workshop Terraform</span>
+    <span class="version">main</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="terraform-intro.html">Workshop Terraform</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="terraform-intro.html">main</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="terraform-intro.html" class="home-link is-current"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="terraform-intro.html">Workshop Terraform</a></li>
+    <li><a href="terraform-intro.html">Introduction</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/EtnMn/workshop-terraform/edit/main/docs/modules/ROOT/pages/terraform-intro.adoc">Éditer</a></div>
+  </div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Introduction à Terraform</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p><em>Terraform</em> est un outil <strong>Open source</strong>, développé par <a href="https://terraform.io">HashiCorp</a>, permettant de faire de l'<strong>Infrastructure as Code</strong> (IaC). C&#8217;est à dire de gérer une infrastructure via des fichiers de configuration, plutôt qu&#8217;au travers d&#8217;une interface graphique. En pratique, cela permet de créer, modifier et gérer des ressources de manière cohérente et de pouvoir répliquer une infrastructure chez différents fournisseurs, tels que <em>Azure, AWS</em>&#8230;&#8203; On parle d&#8217;abstraction des ressources.</p>
+</div>
+<div class="paragraph">
+<p><em>Terraform</em> est comparable à <em>Azure Ressource Manager</em> (ARM), mais il offre des avantages :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Utilisable pour différents <em>Cloud providers</em></p>
+</li>
+<li>
+<p>Langage déclaratif propriétaire <strong>HashiCorp Configuration Language</strong> (HCL) pour écrire les fichiers de configuration. Moins courant que le <em>JSON</em> utilisé par <em>ARM</em>, mais réputé plus lisible. Les fichier <em>HCL</em> portent l&#8217;extension <code>.tf</code></p>
+</li>
+<li>
+<p>Séparation de la planification (simulation) de l&#8217;exécution.</p>
+</li>
+<li>
+<p>Parallélisation de la création des ressources lorsqu&#8217;il n&#8217;y a pas de contrainte de dépendance (cf. <a href="#resource-graph">Resource Graph</a>)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="resource-graph"><a class="anchor" href="#resource-graph"></a>Resource Graph</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A partir des fichiers de configuration, <em>Terraform</em> construit un <strong>graph</strong> de dépendances, qui permettra de planifier le déploiement en prenant en contrainte les dépendances.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/resource-group-graph.svg" alt="graph">
+</div>
+<div class="title">Figure 1. Exemple de graph pour la création d&#8217;un resource group</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="state"><a class="anchor" href="#state"></a>State</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><em>Terraform</em> stocke les informations de l&#8217;infrastructure dans un fichier <strong>state</strong>. Créé lors de l&#8217;utilisation de la commande <strong>apply</strong>, ce fichier <a href="https://www.terraform.io/language/state/purpose">garde la trace</a> des instances réelles créées chez le <em>Cloud providers</em>. Lors de la planification, <em>Terraform</em> compare l&#8217;infrastructure existante au fichier <em>state</em>, afin de savoir ce qui doit être créé, modifié ou supprimé. Le fichier <em>state</em> porte l&#8217;extension <code>.tfstate</code>.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Le fichier <em>state</em> est stocké localement lors du développement. En production il est préférable de le mettre dans un environnement partagé : <em>backend</em>, par exemple un <strong>storage account</strong>.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-caution" title="MISE EN GARDE"></i>
+</td>
+<td class="content">
+Il ne faut pas éditer le fichier <strong>state</strong>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="interpolation"><a class="anchor" href="#interpolation"></a>Interpolation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Les expressions sont utilisées pour référencer ou calculer les valeurs présentent dans les fichiers de configuration. Parmi les différents types d&#8217;expressions, on trouve l&#8217;interpolation. Elle permet de référencer les variables, arguments (ex: <em>vm_size</em> pour le dimensionnement d&#8217;une machine virtuelle) ou attributs (ex: l&#8217;adresse IP d&#8217;une VM déployée) d&#8217;autres ressources. La chaîne interpolée est bornée par les caractères <code>${}</code>.Pour récupérer l&#8217;état d&#8217;une variable on utilisera, par exemple : <code>${var.foo}</code>. Pour conditionner un état : <code>${var.env == "production" ? var.prod_subnet : var.dev_subnet}</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="providers"><a class="anchor" href="#providers"></a>Providers</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Pour interagir avec les fournisseurs d&#8217;infrastructure, <em>Terraform</em> s&#8217;appuie sur les <strong>providers</strong>. Ce sont des plugins référencés dans les fichiers de configuration, qui vont permettre de gérer les ressources. Dans le cadre de <strong>Microsoft</strong> on peut en distinguer 3 :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/terraform-providers/terraform-provider-azurerm">AzureRM</a> pour gérer les ressources <em>Azure</em> via <em>Azure Resource Manager</em></p>
+</li>
+<li>
+<p><a href="https://github.com/hashicorp/terraform-provider-azuread">AzureAD</a> pour <em>Azure Active Directory</em> (AAD)</p>
+</li>
+<li>
+<p><a href="https://github.com/microsoft/terraform-provider-azuredevops">AzureDevops</a> pour les ressources <em>DevOps</em></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Le <a href="https://registry.terraform.io/browse/providers">registry</a> permet de parcourir les providers existants. Une fois référencés dans les fichiers de configuration, les <em>providers</em> sont automatiquement installés lors de l&#8217;initialisation de l&#8217;espace de travail : <code>terraform init</code>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Pour éviter les problèmes liés aux mises à jour des providers, il faut fixer les versions utilisées dans les fichiers de configuration.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="workflow"><a class="anchor" href="#workflow"></a>Workflow</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Le langage <em>HCL</em> est dit <strong>déclaratif</strong>, par opposition à l&#8217;impératif. Le déclaratif permet de décrire l&#8217;état souhaité, pour laisser ensuite <em>Terraform</em> gérer les <a href="#resource-graph">moyens à mettre en oeuvre</a> pour y parvenir.</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="_images/diag-a3f85ba8701534fc6757d1bf2a631033a1a0ebe9.svg" alt="Workflow Terraform">
+</div>
+<div class="title">Figure 2. Workflow Terraform</div>
+</div>
+<div class="paragraph">
+<p>3 commandes <em>Terraform</em> sont utilisées pour réaliser ce cycle :</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>init</code>: Installation des plugins utilisés. A ne relancer qu&#8217;en cas de changement de configuration du <em>backend</em> ou d&#8217;un <em>module</em></p>
+</li>
+<li>
+<p><code>plan</code>: Prévisualisation des modifications qui seront effectuées en prenant en compte la configuration</p>
+</li>
+<li>
+<p><code>apply</code>: Mise à jour des ressources</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>A noter également l&#8217;option <code>destroy</code>, applicable à <em>plan</em> et <em>apply</em>, qui permet de supprimer les ressources distantes.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="les-fichiers-de-configuration"><a class="anchor" href="#les-fichiers-de-configuration"></a>Les fichiers de configuration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>La configuration <em>Terraform</em> s&#8217;effectue au travers des fichier <code>.tf</code> et/ou <code>.tf.json</code> présent dans le répertoire courant. Cette configuration peut être séparée en plusieurs fichiers, qui seront <em>fusionnés</em> lors du chargement de la configuration.</p>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="next"><a href="setup.html">Mise en place</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="100" data-stylesheet="../../_/css/search.css"></script>
+<script async src="../../search-index.js"></script>
+  </body>
+</html>

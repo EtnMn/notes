@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Créer des ressources Azure :: Notes</title>
+    <link rel="canonical" href="https://menou.fr/notes/component-workshop-terraform/main/create-resources.html">
+    <link rel="prev" href="setup.html">
+    <meta name="description" content="Création de ressources dans Azure.">
+    <meta name="generator" content="Antora 3.0.1">
+    <link rel="stylesheet" href="../../_/css/site.css">
+    <script>var uiRootPath = '../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <img class="navbar-item" src="../../_/img/logo.png" alt="logo" width="32" height="32">
+      <a class="navbar-item" href="https://menou.fr/notes">Notes</a>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Rechercher">
+        </div>
+      </div>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/EtnMn">
+          <span class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" aria-labelledby="title" aria-describedby="desc" role="img" xmlns:xlink="http://www.w3.org/1999/xlink">
+              <title>My Github</title>
+              <path data-name="layer2" d="M32 0a32.021 32.021 0 0 0-10.1 62.4c1.6.3 2.2-.7 2.2-1.5v-6c-8.9 1.9-10.8-3.8-10.8-3.8-1.5-3.7-3.6-4.7-3.6-4.7-2.9-2 .2-1.9.2-1.9 3.2.2 4.9 3.3 4.9 3.3 2.9 4.9 7.5 3.5 9.3 2.7a6.93 6.93 0 0 1 2-4.3c-7.1-.8-14.6-3.6-14.6-15.8a12.27 12.27 0 0 1 3.3-8.6 11.965 11.965 0 0 1 .3-8.5s2.7-.9 8.8 3.3a30.873 30.873 0 0 1 8-1.1 30.292 30.292 0 0 1 8 1.1c6.1-4.1 8.8-3.3 8.8-3.3a11.965 11.965 0 0 1 .3 8.5 12.1 12.1 0 0 1 3.3 8.6c0 12.3-7.5 15-14.6 15.8a7.746 7.746 0 0 1 2.2 5.9v8.8c0 .9.6 1.8 2.2 1.5A32.021 32.021 0 0 0 32 0z" fill="#FFF"></path>
+              <path data-name="layer1" d="M12.1 45.9c-.1.2-.3.2-.5.1s-.4-.3-.3-.5.3-.2.6-.1c.2.2.3.4.2.5zm1.3 1.5a.589.589 0 0 1-.8-.8.631.631 0 0 1 .7.1.494.494 0 0 1 .1.7zm1.3 1.8a.585.585 0 0 1-.7-.3.6.6 0 0 1 0-.8.585.585 0 0 1 .7.3c.2.3.2.7 0 .8zm1.7 1.8c-.2.2-.5.1-.8-.1-.3-.3-.4-.6-.2-.8a.619.619 0 0 1 .8.1.554.554 0 0 1 .2.8zm2.4 1c-.1.3-.4.4-.8.3s-.6-.4-.5-.7.4-.4.8-.3c.3.2.6.5.5.7zm2.6.2c0 .3-.3.5-.7.5s-.7-.2-.7-.5.3-.5.7-.5c.4.1.7.3.7.5zm2.4-.4q0 .45-.6.6a.691.691 0 0 1-.8-.3q0-.45.6-.6c.5-.1.8.1.8.3z" fill="#FFF"></path>
+            </svg>
+          </span>
+        </a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="component-workshop-terraform" data-version="main">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="terraform-intro.html">Workshop Terraform</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="terraform-intro.html">Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="setup.html">Mise en place</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="create-resources.html">Créer des ressources</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Workshop Terraform</span>
+    <span class="version">main</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="terraform-intro.html">Workshop Terraform</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="terraform-intro.html">main</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="terraform-intro.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="terraform-intro.html">Workshop Terraform</a></li>
+    <li><a href="create-resources.html">Créer des ressources</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/EtnMn/workshop-terraform/edit/main/docs/modules/ROOT/pages/create-resources.adoc">Éditer</a></div>
+  </div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Créer des ressources Azure</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>L&#8217;objectif est de créer un <em>resource group</em> contenant un <em>storage account</em>.</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="_images/diag-f18391458018f3739b0914f2ef747572b5d66a2e.svg" alt="Architecture cible">
+</div>
+<div class="title">Figure 1. Architecture cible</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="azure-provider"><a class="anchor" href="#azure-provider"></a>Azure Provider</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Le <a href="https://registry.terraform.io/providers/hashicorp/azurerm"><em>Provider Azure</em></a> permet de gérer les infrastructures <em>Azure</em> en utilisant l&#8217;API <em>ARM</em>. Le bloc <code>required_providers</code> permet, quant à lui, de forcer les versions utilisées.</p>
+</div>
+<div class="listingblock">
+<div class="title">versions.tf</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-terraform hljs" data-lang="terraform"># Configuration de terraform
+terraform {                     <i class="conum" data-value="1"></i><b>(1)</b>
+  required_version = "&gt;= 1.2.1" <i class="conum" data-value="2"></i><b>(2)</b>
+  required_providers {
+    azurerm = {                     <i class="conum" data-value="3"></i><b>(3)</b>
+      source  = "hashicorp/azurerm" <i class="conum" data-value="4"></i><b>(4)</b>
+      version = "~&gt;3.0.0"           <i class="conum" data-value="5"></i><b>(5)</b>
+    }
+  }
+}
+
+# Configuration du provider
+provider "azurerm" {
+  features {} <i class="conum" data-value="6"></i><b>(6)</b>
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Bloc de configuration <em>Terraform</em></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Version minimale de <em>Terraform</em> à utiliser</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Clé d&#8217;identification locale du provider <em>AzureRM</em></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Source du provider</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td><a href="https://www.terraform.io/language/providers/requirements#version-constraints">Contrainte de la version du provider</a></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Bloc de configuration du provider</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Pour une question de performance, il est préférable de travailler depuis le répertoire <strong>HOME</strong> de la distribution.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="resources"><a class="anchor" href="#resources"></a>Resources</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Les <strong>Resources</strong> sont des éléments importants du langage <em>Terraform</em>. Chaque bloc décrit un objet de l&#8217;infrastructure : une machine virtuelle, un <em>storage account</em>, ou un un <a href="https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group">resource group</a>.</p>
+</div>
+<div class="listingblock">
+<div class="title">resource-group.tf</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-terraform hljs" data-lang="terraform">resource "azurerm_resource_group" "t-resource-group" { <i class="conum" data-value="1"></i><b>(1)</b> <i class="conum" data-value="2"></i><b>(2)</b>
+  name     = "rg-workshop"                             <i class="conum" data-value="3"></i><b>(3)</b>
+  location = "West Europe"                             <i class="conum" data-value="4"></i><b>(4)</b>
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><em>Data source</em> permettant de gérer les <em>resource groups</em></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Nom local de la ressource, utilisé pour les <a href="#attributs">références</a> dans le module <em>Terraform</em></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Nom de la ressource dans <em>Azure</em></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Emplacement de la ressource <em>Azure</em></td>
+</tr>
+</table>
+</div>
+<div class="literalblock">
+<div class="title">Initialisation des providers</div>
+<div class="content">
+<pre>$ terraform init</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Contenu du répertoire projet après l&#8217;init</div>
+<div class="content">
+<pre>📒 workshop-terraform
+  📄 .terraform.lock.hcl <i class="conum" data-value="1"></i><b>(1)</b>
+  📄 resource-group.tf
+  📄 versions.tf
+  📂 .terraform
+    📂 providers <i class="conum" data-value="2"></i><b>(2)</b></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Fichier créé lors de l&#8217;init pour verrouiller les versions des dépendances utilisées</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Contient les providers téléchargés</td>
+</tr>
+</table>
+</div>
+<div class="literalblock">
+<div class="title">Génération du plan d&#8217;exécution (~preview)</div>
+<div class="content">
+<pre>$ terraform plan</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Détail du plan d&#8217;exécution</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following
+symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # azurerm_resource_group.t-resource-group will be created
+  + resource "azurerm_resource_group" "t-resource-group" { <i class="conum" data-value="1"></i><b>(1)</b>
+      + id       = (known after apply)
+      + location = "westeurope"
+      + name     = "rg-workshop"
+    }
+
+Plan: 1 to add, 0 to change, 0 to destroy.</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Ressource créée (symbole +) si le plan est appliqué</td>
+</tr>
+</table>
+</div>
+<div class="literalblock">
+<div class="title">Mise en application du plan</div>
+<div class="content">
+<pre>$ terraform apply</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes <i class="conum" data-value="1"></i><b>(1)</b>
+
+azurerm_resource_group.t-resource-group: Creating...
+azurerm_resource_group.t-resource-group: Creation complete after 1s [id=/subscriptions/.../resourceGroups/rg-workshop] <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Validation de la création de la ressource</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Le <em>resource group</em> existe a été créé dans la <em>subscription</em></td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>A l&#8217;issue de la commande <em>apply</em>, un fichier <a href="terraform-intro.html#state" class="xref page">state</a>: <code>terraform.tfstate</code> est créé dans le répertoire du projet. Lorsque des <strong>modifications</strong> sont apportées à une ressource gérée par <em>Terraform</em>, deux cas sont possibles:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Les modifications peuvent être appliquées directement à la ressource</p>
+</li>
+<li>
+<p>Les modifications nécessitent de redéployer la ressource. C&#8217;est le cas par exemple lorsque l&#8217;on souhaite modifier la redondance d&#8217;un <em>storage account</em></p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Pour ajouter un <em>tag</em> au <em>resource group</em> :</p>
+</div>
+<div class="listingblock">
+<div class="title">resource-group.tf</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-terraform hljs" data-lang="terraform">resource "azurerm_resource_group" "t-resource-group" { <i class="conum" data-value="1"></i><b>(1)</b> <i class="conum" data-value="2"></i><b>(2)</b>
+  name     = "rg-workshop"                             <i class="conum" data-value="3"></i><b>(3)</b>
+  location = "West Europe"                             <i class="conum" data-value="4"></i><b>(4)</b>
+
+  tags = {
+    environment = "dev" <i class="conum" data-value="5"></i><b>(5)</b>
+  }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><em>Data source</em> permettant de gérer les <em>resource groups</em></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Nom local de la ressource, utilisé pour référencer dans le module <em>Terraform</em></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Nom de la ressource dans <em>Azure</em></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Emplacement de la ressource <em>Azure</em></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Ajout du <em>tag</em> <code>environnement</code></td>
+</tr>
+</table>
+</div>
+<div class="literalblock">
+<div class="title">Mise à jour du plan d&#8217;exécution</div>
+<div class="content">
+<pre>$ terraform plan</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">azurerm_resource_group.t-resource-group: Refreshing state... [id=/subscriptions/.../resourceGroups/rg-workshop]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following
+symbols:
+  ~ update in-place
+
+Terraform will perform the following actions:
+
+  # azurerm_resource_group.t-resource-group will be updated in-place
+  ~ resource "azurerm_resource_group" "t-resource-group" { <i class="conum" data-value="1"></i><b>(1)</b>
+        id       = "/subscriptions/.../resourceGroups/rg-workshop"
+        name     = "rg-workshop"
+      ~ tags     = {
+          + "environment" = "dev"
+        }
+        # (1 unchanged attribute hidden)
+    }
+
+Plan: 0 to add, 1 to change, 0 to destroy.</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Ressource modifiée (symbole ~)</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>A partir des informations contenus dans le fichier <code>terraform.tfstate</code>, <em>Terraform</em> a déterminé que seul le <em>tag</em> devait être créé.</p>
+</div>
+<div class="literalblock">
+<div class="title">Ajout du tag dans Azure</div>
+<div class="content">
+<pre>$ terraform apply</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="title">Voir l&#8217;état du déploiement dans Azure</div>
+<div class="content">
+<pre>$ terraform show</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="title">Indenter automatiquement les fichier .tf du répertoire</div>
+<div class="content">
+<pre>$ terraform fmt</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="sauvegarder-le-plan"><a class="anchor" href="#sauvegarder-le-plan"></a>Sauvegarder le plan</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>lors de l&#8217;utilisation de la commande <code>terraform plan</code>, il est conseillé de <a href="https://www.terraform.io/cli/commands/plan">sauvegarder</a> le plan afin de s&#8217;assurer que l' <code>apply</code> soit cohérent avec ce qui a été observé lors de la planification.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly
+these actions if you run "terraform apply" now.</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="title">Sauvegarde du plan et création du fichier binaire <code>tfplan</code></div>
+<div class="content">
+<pre>$ terraform plan -out=tfplan</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="title">Application du plan</div>
+<div class="content">
+<pre>$ terraform apply tfplan</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Lorsque que l&#8217;on applique un plan sauvegardé, aucune confirmation de modification de ressource n&#8217;est demandée.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="les-variables"><a class="anchor" href="#les-variables"></a>Les variables</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>L&#8217;utilisation des <a href="https://www.terraform.io/language/values/variables">variables</a> permet de séparer la configuration du code. La configuration peur changer en fonction des environnements cibles, elle doit donc être stockée à l&#8217;extérieur de l&#8217;application.</p>
+</div>
+<div class="listingblock">
+<div class="title">variables.tf</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-terraform hljs" data-lang="terraform">variable "resource-group-name" { <i class="conum" data-value="1"></i><b>(1)</b>
+  description = "Azure resource group name"
+  type        = string <i class="conum" data-value="2"></i><b>(2)</b>
+}
+
+variable "azure-region" {
+  description = "Azure location"
+  type        = string
+  default     = "westeurope" <i class="conum" data-value="3"></i><b>(3)</b>
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>La déclaration des variables se fait dans les blocs <code>variable</code>. La nom doit être unique et respecter les contraintes des <a href="https://www.terraform.io/language/syntax/configuration#identifiers">Identifiers</a></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Si le <code>type</code> n&#8217;est pas spécifié, la valeur par défaut sera <code>string</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Une valeur par défaut peut parfois être utile quand on utilise fréquemment les mêmes valeurs. <a href="https://github.com/claranet/terraform-azurerm-regions/blob/master/REGIONS.md">Liste des régions Azure</a> (<em>Colonne Azure CLI Name</em>)</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Pour faire référence aux variables, on utilise la syntaxe: <code>var.nom-de-la-variable</code></p>
+</div>
+<div class="listingblock">
+<div class="title">resource-group.tf</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-terraform hljs" data-lang="terraform">resource "azurerm_resource_group" "t-resource-group" {
+  name     = var.resource-group-name <i class="conum" data-value="1"></i><b>(1)</b>
+  location = var.azure-region
+
+  tags = {
+    environment = "dev"
+  }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Utilisation des variables du fichier <em>variables.tf</em></td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Lors du <em>plan</em>, les variables sans valeur par défaut devront être renseignées.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="passer-les-variables-à-terraform"><a class="anchor" href="#passer-les-variables-à-terraform"></a>Passer les variables à Terraform</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Renseigner manuellement les variables lors du <em>plan</em> est source d&#8217;erreurs. Il existe 3 autres possibilités:</p>
+</div>
+<div class="sect2">
+<h3 id="loption-var"><a class="anchor" href="#loption-var"></a>L&#8217;option -var</h3>
+<div class="literalblock">
+<div class="title">Assignation de la variable via la ligne de commande</div>
+<div class="content">
+<pre>$ terraform plan -var.resource-group-name="rg-workshop"</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="variable-denvironnement"><a class="anchor" href="#variable-denvironnement"></a>Variable d&#8217;environnement</h3>
+<div class="paragraph">
+<p>Utile lorsque l&#8217;on utilise souvent les mêmes variables. Le nom de la variable d&#8217;environnement doit être préfixé par <code>TF_VAR_</code></p>
+</div>
+<div class="literalblock">
+<div class="title">Assignation de la variable via la ligne de commande</div>
+<div class="content">
+<pre>$ export TF_VAR_resource-group-name='rg-workshop'</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="fichiers-de-définition-des-variables"><a class="anchor" href="#fichiers-de-définition-des-variables"></a>Fichiers de définition des variables</h3>
+<div class="paragraph">
+<p>Les fichiers de définition des variables listent les variables et leurs valeurs. Ces fichiers portent l&#8217;extension <code>.tfvars</code> ou <code>.tfvars.json</code>.</p>
+</div>
+<div class="listingblock">
+<div class="title">terraform.tfvars</div>
+<div class="content">
+<pre>resource-group-name = "rg-workshop"</pre>
+</div>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Il est préférable de ne pas gérer ces fichiers en <a href="setup.html#git" class="xref page">configuration</a>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="attributs"><a class="anchor" href="#attributs"></a>Attributs</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Les attributs d&#8217;une <a href="#resources">ressource</a> sont ses valeurs post déploiement, par exemple son nom. Il est possible de faire référence à ces informations lors de la configuration grace aux <a href="https://www.terraform.io/language/expressions">expressions</a>, la syntaxe est alors: <code>&lt;RESOURCE TYPE&gt;.&lt;TERRAFORM_NAME&gt;.&lt;ATTRIBUTE&gt;</code>. On pourra ainsi utiliser le nom du <em>resource group</em> créé précédemment de la manière suivante: <code>azurerm_resource_group.t-rg-workshop.name</code></p>
+</div>
+<div class="paragraph">
+<p>Dans l&#8217;exemple qui suit, on créé un compte de stockage à partir des attributs du <em>resource group</em>.</p>
+</div>
+<div class="listingblock">
+<div class="title">variables.tf</div>
+<div class="content">
+<pre>variable "storage-account-name" {
+  description = "Azure storage account name"
+  type        = string
+}
+
+variable "storage-account-container-name" {
+  description = "Azure storage account container name"
+  type        = string
+  default     = "files"
+}</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">storage-account.tf</div>
+<div class="content">
+<pre>resource "azurerm_storage_account" "t-storage-account" { <i class="conum" data-value="1"></i><b>(1)</b>
+  name                     = var.storage-account-name
+  resource_group_name      = azurerm_resource_group.t-resource-group.name     <i class="conum" data-value="2"></i><b>(2)</b>
+  location                 = azurerm_resource_group.t-resource-group.location <i class="conum" data-value="3"></i><b>(3)</b>
+  account_tier             = "Standard"
+  account_replication_type = "GRS"
+
+  tags = {
+    environment = "dev"
+  }
+}
+
+resource "azurerm_storage_container" "t-storage-account-container" { <i class="conum" data-value="4"></i><b>(4)</b>
+  name                  = var.storage-account-container-name
+  storage_account_name  = azurerm_storage_account.t-storage-account.name <i class="conum" data-value="5"></i><b>(5)</b>
+  container_access_type = "private"
+}</pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><a href="https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account">Ajout d&#8217;un compte de stockage</a></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Utilisation de l&#8217;attribut <em>nom</em> du <em>resource group</em></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Utilisation de l&#8217;attribut <em>localisation</em> du <em>resource group</em></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td><a href="https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_container">Ajout d&#8217;un conteneur</a></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Utilisation de l&#8217;attribut <em>nom</em> du compte de stockage</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="nettoyer-les-ressources"><a class="anchor" href="#nettoyer-les-ressources"></a>Nettoyer les ressources</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>L&#8217;option <code>-destroy</code> permet de supprimer les ressources gérées par <em>Terraform</em>.</p>
+</div>
+<div class="literalblock">
+<div class="title">Planifier puis supprimer les ressources</div>
+<div class="content">
+<pre>$ terraform plan -destroy
+$ terraform apply -destroy</pre>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="setup.html">Mise en place</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="100" data-stylesheet="../../_/css/search.css"></script>
+<script async src="../../search-index.js"></script>
+  </body>
+</html>
