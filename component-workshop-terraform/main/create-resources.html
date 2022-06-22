@@ -184,7 +184,7 @@ Pour une question de performance, il est préférable de travailler depuis le r�
 <h2 id="resources"><a class="anchor" href="#resources"></a>Resources</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Les <strong>Resources</strong> sont des éléments importants du langage <em>Terraform</em>. Chaque bloc décrit un objet de l&#8217;infrastructure : une machine virtuelle, un <em>storage account</em>, ou un un <a href="https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group">resource group</a>.</p>
+<p>Les <strong>Resources</strong> sont des éléments importants du langage <em>Terraform</em>. Chaque bloc décrit un objet de l&#8217;infrastructure : une machine virtuelle, un <em>storage account</em>, ou un <a href="https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group">resource group</a>.</p>
 </div>
 <div class="listingblock">
 <div class="title">resource-group.tf</div>
@@ -303,7 +303,7 @@ azurerm_resource_group.t-resource-group: Creation complete after 1s [id=/subscri
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Le <em>resource group</em> existe a été créé dans la <em>subscription</em></td>
+<td>Le <em>resource group</em> a été créé dans la <em>subscription</em></td>
 </tr>
 </table>
 </div>
@@ -398,7 +398,7 @@ Plan: 0 to add, 1 to change, 0 to destroy.</code></pre>
 </table>
 </div>
 <div class="paragraph">
-<p>A partir des informations contenus dans le fichier <code>terraform.tfstate</code>, <em>Terraform</em> a déterminé que seul le <em>tag</em> devait être créé.</p>
+<p>À partir des informations contenues dans le fichier <code>terraform.tfstate</code>, <em>Terraform</em> a déterminé que seul le <em>tag</em> devait être créé.</p>
 </div>
 <div class="literalblock">
 <div class="title">Ajout du tag dans Azure</div>
@@ -569,7 +569,7 @@ variable "azure-region" {
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-Il est préférable de ne pas gérer ces fichiers en <a href="setup.html#git" class="xref page">configuration</a>.
+Il est préférable d&#8217;<a href="setup.html#git" class="xref page">exclure</a> ces fichiers du <em>repository</em>.
 </td>
 </tr>
 </table>
