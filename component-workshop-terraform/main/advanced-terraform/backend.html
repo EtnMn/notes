@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Backend :: Notes</title>
+    <link rel="canonical" href="https://menou.fr/notes/component-workshop-terraform/main/advanced-terraform/backend.html">
+    <link rel="prev" href="../create-resources.html">
+    <link rel="next" href="existing-resources.html">
+    <meta name="generator" content="Antora 3.0.1">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <script>var uiRootPath = '../../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <img class="navbar-item" src="../../../_/img/logo.png" alt="logo" width="32" height="32">
+      <a class="navbar-item" href="https://menou.fr/notes">Notes</a>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Rechercher">
+        </div>
+      </div>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/EtnMn">
+          <span class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" aria-labelledby="title" aria-describedby="desc" role="img" xmlns:xlink="http://www.w3.org/1999/xlink">
+              <title>My Github</title>
+              <path data-name="layer2" d="M32 0a32.021 32.021 0 0 0-10.1 62.4c1.6.3 2.2-.7 2.2-1.5v-6c-8.9 1.9-10.8-3.8-10.8-3.8-1.5-3.7-3.6-4.7-3.6-4.7-2.9-2 .2-1.9.2-1.9 3.2.2 4.9 3.3 4.9 3.3 2.9 4.9 7.5 3.5 9.3 2.7a6.93 6.93 0 0 1 2-4.3c-7.1-.8-14.6-3.6-14.6-15.8a12.27 12.27 0 0 1 3.3-8.6 11.965 11.965 0 0 1 .3-8.5s2.7-.9 8.8 3.3a30.873 30.873 0 0 1 8-1.1 30.292 30.292 0 0 1 8 1.1c6.1-4.1 8.8-3.3 8.8-3.3a11.965 11.965 0 0 1 .3 8.5 12.1 12.1 0 0 1 3.3 8.6c0 12.3-7.5 15-14.6 15.8a7.746 7.746 0 0 1 2.2 5.9v8.8c0 .9.6 1.8 2.2 1.5A32.021 32.021 0 0 0 32 0z" fill="#FFF"></path>
+              <path data-name="layer1" d="M12.1 45.9c-.1.2-.3.2-.5.1s-.4-.3-.3-.5.3-.2.6-.1c.2.2.3.4.2.5zm1.3 1.5a.589.589 0 0 1-.8-.8.631.631 0 0 1 .7.1.494.494 0 0 1 .1.7zm1.3 1.8a.585.585 0 0 1-.7-.3.6.6 0 0 1 0-.8.585.585 0 0 1 .7.3c.2.3.2.7 0 .8zm1.7 1.8c-.2.2-.5.1-.8-.1-.3-.3-.4-.6-.2-.8a.619.619 0 0 1 .8.1.554.554 0 0 1 .2.8zm2.4 1c-.1.3-.4.4-.8.3s-.6-.4-.5-.7.4-.4.8-.3c.3.2.6.5.5.7zm2.6.2c0 .3-.3.5-.7.5s-.7-.2-.7-.5.3-.5.7-.5c.4.1.7.3.7.5zm2.4-.4q0 .45-.6.6a.691.691 0 0 1-.8-.3q0-.45.6-.6c.5-.1.8.1.8.3z" fill="#FFF"></path>
+            </svg>
+          </span>
+        </a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="component-workshop-terraform" data-version="main">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../terraform-intro.html">Workshop Terraform</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../terraform-intro.html">Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../setup.html">Mise en place</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../create-resources.html">Créer des ressources</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="backend.html">Backend</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="existing-resources.html">Ressources existantes</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="modules.html">Les modules</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Workshop Terraform</span>
+    <span class="version">main</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="../terraform-intro.html">Workshop Terraform</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../terraform-intro.html">main</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../terraform-intro.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../terraform-intro.html">Workshop Terraform</a></li>
+    <li><a href="backend.html">Backend</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/EtnMn/workshop-terraform/edit/main/docs/modules/advanced-terraform/pages/backend.adoc">Éditer</a></div>
+  </div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Backend</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Les <strong>Backends</strong> définissent l&#8217;espace de stockage des fichiers <a href="../terraform-intro.html#state" class="xref page">state</a>. Le <em>state</em> est nécessaire pour lier les ressources <em>Terraform</em> à l&#8217;architecture réelle.  Par défaut, c&#8217;est le <em>backend</em> <em>local</em> qui est utilisé et les fichiers sont stockés sur le disque dur de la machine de travail, mais toutes les personnes travaillant sur un projet commun doivent pouvoir accéder aux mêmes informations, ainsi, il existe également des <em>backends</em> distants comme par exemple : <strong>azurerm</strong>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="azurerm"><a class="anchor" href="#azurerm"></a>azurerm</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Le <em>backend</em> <strong>azurerm</strong> permet de stocker les <em>states</em> dans un <em>Azure storage</em>. Il supporte par défaut le <em><a href="https://docs.microsoft.com/fr-fr/azure/developer/terraform/store-state-in-azure-storage?tabs=azure-cli#4-understand-state-locking">state locking</a></em> pour prévenir des modifications concurrentes, ainsi que le <em>consistency checking</em> pour garantir l&#8217;intégrité de la donnée. A cela on peut ajouter le chiffrement au repos et la redondance.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="créer-le-storage-account"><a class="anchor" href="#créer-le-storage-account"></a>Créer le storage account</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Le <em>remote state</em> est généralement stocké dans un <em>resource group</em> distinct de celui utilisé pour héberger l&#8217;infrastructure. Le script suivant permet de réaliser une création classique d&#8217;un compte de stockage :</p>
+</div>
+<div class="listingblock">
+<div class="title">create-backend.ps1</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-powershell hljs" data-lang="powershell">$RESOURCE_GROUP_NAME="rg-workshop-state";
+$LOCATION="westeurope";
+$TF_STORAGE_ACCOUNT="ststate" + (Get-Random -Minimum 1000 -Maximum 9999);
+$CONTAINER_NAME="tfstate";
+$LOCK_NAME="delete-lock";
+az group create --name $RESOURCE_GROUP_NAME --location $LOCATION;
+az storage account create `
+  --resource-group $RESOURCE_GROUP_NAME `
+  --name $TF_STORAGE_ACCOUNT `
+  --sku Standard_LRS `
+  --allow-blob-public-access false `
+  --encryption-services blob; <i class="conum" data-value="1"></i><b>(1)</b> <i class="conum" data-value="2"></i><b>(2)</b> <i class="conum" data-value="3"></i><b>(3)</b>
+az storage account blob-service-properties update --account-name $TF_STORAGE_ACCOUNT `
+    --resource-group $RESOURCE_GROUP_NAME `
+    --enable-delete-retention true `
+    --delete-retention-days 7 <i class="conum" data-value="4"></i><b>(4)</b>
+$ACCOUNT_KEY=$(az storage account keys list --resource-group $RESOURCE_GROUP_NAME --account-name $TF_STORAGE_ACCOUNT --query '[0].value' -o tsv); <i class="conum" data-value="5"></i><b>(5)</b>
+az storage container create --name $CONTAINER_NAME --account-name $TF_STORAGE_ACCOUNT --account-key $ACCOUNT_KEY;
+az lock create --name $LOCK_NAME --resource-group $RESOURCE_GROUP_NAME --lock-type CanNotDelete --resource-type Microsoft.Storage/storageAccounts  --resource $TF_STORAGE_ACCOUNT; <i class="conum" data-value="6"></i><b>(6)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Configuration de la <a href="https://docs.microsoft.com/en-us/azure/storage/common/storage-redundancy">redondance des données</a></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Désactivation de l&#8217;accès publique</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Chiffrement des <em>blobs</em></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Activation du <em>soft delete</em></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>Récupération de la clé d&#8217;accès au <em>storage account</em></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Empêcher la suppression du <em>storage account</em></td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+D&#8217;autres personnalisations peuvent être envisagées pour <a href="https://jamescook.dev/bestpractice-terraformstate-azureblob">améliorer le sécurité</a>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="configurer-le-remote-backend"><a class="anchor" href="#configurer-le-remote-backend"></a>Configurer le remote backend</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Pour lier le <em>backend</em> à la configuration, il faut utiliser le bloc <code>terraform</code>. Les valeurs à renseigner dépendent du <a href="https://www.terraform.io/language/settings/backends/azurerm#example-configuration">type d&#8217;authentification</a> (<em>Azure CLI, Managed Identity, Access key&#8230;&#8203;</em>). Le code ci-dessous présente la configuration pour une authentification via <em>Azure CLI</em> ou <em>Service Principal</em> :</p>
+</div>
+<div class="listingblock">
+<div class="title">version.tf</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-terraform hljs" data-lang="terraform"># Configuration de terraform
+terraform {
+  required_version = "&gt;= 1.2.1"
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~&gt;3.0.0"
+    }
+  }
+  backend "azurerm" {
+    resource_group_name  = "rg-workshop-state" <i class="conum" data-value="1"></i><b>(1)</b>
+    storage_account_name = "ststate2738" <i class="conum" data-value="2"></i><b>(2)</b>
+    container_name       = "tfstate" <i class="conum" data-value="3"></i><b>(3)</b>
+    key                  = "terraform.tfstate" <i class="conum" data-value="4"></i><b>(4)</b>
+  }
+}
+
+# Configuration du provider
+provider "azurerm" {
+  features {}
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Nom du <em>resource group</em> dans <em>Azure</em></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Nom du <em>storage account</em></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Nom du conteneur dans le <em>storage account</em></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>Nom du blob stockant le <em>state</em> dans le conteneur</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>A la différence du mode <em>local</em>, le <em>state</em> distant est créé dès le <code>terraform init</code>. Par conséquent, le <em>storage account</em> doit avoir été initialisé au préalable. En cas de modification du backend, il faut refaire un <code>terraform init</code> pour valider la configuration.</p>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-caution" title="MISE EN GARDE"></i>
+</td>
+<td class="content">
+La configuration du <em>backend</em> ne supporte pas l&#8217;interpolation.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="workspaces"><a class="anchor" href="#workspaces"></a>Workspaces</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Les données stockées dans le <em>backend</em>, appartiennent à un <em>workspace</em>. Initialement, il n&#8217;y qu&#8217;un seul <em>workspace</em> nommé : <em>default</em> et donc un seul état associé à la configuration. Certains <em>backends</em>, dont <a href="#azurerm">azurerm</a> peuvent prendre en charge plusieurs <em>workspaces</em>, permettant à plusieurs instances de configuration de lui être associées. <a href="https://www.terraform.io/language/state/workspaces#when-to-use-multiple-workspaces">Cette fonctionnalité</a> permet par exemple de tester des changements sans impacter la production, ou encore de gérer les environnements s&#8217;il n&#8217;y a pas de séparation forte au niveau du backend. Le workspace <em>default</em> est généralement associé à la branche <em>main</em> du code, les autres aux <em>features</em>.</p>
+</div>
+<div class="sect2">
+<h3 id="gérer-les-workspaces"><a class="anchor" href="#gérer-les-workspaces"></a>Gérer les workspaces</h3>
+<div class="paragraph">
+<p>Création d&#8217;un nouveau <em>blob</em> dans le <em>backend</em>, ayant pour nom <code>terraform.tfstateenv:dev</code></p>
+</div>
+<div class="literalblock">
+<div class="title">Création du workspace <em>dev</em></div>
+<div class="content">
+<pre>$ terraform workspace new dev</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="title">Afficher le workspace courant</div>
+<div class="content">
+<pre>$ terraform workspace show</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="title">Retour sur le workspace par défaut</div>
+<div class="content">
+<pre>$ terraform workspace select default</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="utiliser-le-nom-du-workspace-dans-la-configuration"><a class="anchor" href="#utiliser-le-nom-du-workspace-dans-la-configuration"></a>Utiliser le nom du workspace dans la configuration</h3>
+<div class="paragraph">
+<p>Dans la configuration, le <em>workspace</em> est accessible via la variable <code>terraform.workspace</code>. Dans l&#8217;exemple suivant, le nom du <em>workspace</em> est associé au nom du <em>resource group</em> :</p>
+</div>
+<div class="listingblock">
+<div class="title">version.tf</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-terraform hljs" data-lang="terraform"># Déclaration des valeurs locales
+locals { <i class="conum" data-value="1"></i><b>(1)</b>
+  environment = terraform.workspace == "default" ? "prod" : terraform.workspace <i class="conum" data-value="2"></i><b>(2)</b>
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Les valeurs locales permettent d&#8217;associer une expression à un nom, qui pourra être réutiliser dans la configuration</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Association du workspace à l&#8217;environment</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="title">resource-group.tf</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-terraform hljs" data-lang="terraform">resource "azurerm_resource_group" "t-resource-group" {
+  name     = "${var.resource-group-name}-${local.environment}" <i class="conum" data-value="1"></i><b>(1)</b>
+  location = var.azure-region
+
+  tags = {
+    environment = local.environment
+  }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Ajout du suffixe de l&#8217;environnement au nom de la ressource</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>En appliquant la configuration sur les 2 <em>workspaces</em>, on retrouve bien les 2 <em>resource groups</em> dans <em>Azure</em> :</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/workspaces.png" alt="resource groups">
+</div>
+<div class="title">Figure 1. Les 2 resource groups ont été créés dans la subscription</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Quelques liens utiles pour les conventions de nommage dans Azure:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://docs.microsoft.com/fr-fr/azure/cloud-adoption-framework/ready/azure-best-practices/resource-abbreviations?WT.mc_id=java-26679-cxa">Abréviations recommandées pour les types de ressources Azure</a></p>
+</li>
+<li>
+<p><a href="https://docs.microsoft.com/fr-fr/azure/azure-resource-manager/management/resource-name-rules?WT.mc_id=java-26683-cxa">Règles de nommage et restrictions pour les ressources Azure</a></p>
+</li>
+<li>
+<p><a href="https://docs.microsoft.com/fr-fr/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming?WT.mc_id=java-26685-cxa">Définir votre convention de nommage</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Pour le nommage des ressources, il est également possible d&#8217;utiliser le <em>provider</em> <a href="https://registry.terraform.io/providers/aztfmod/azurecaf/">azurecaf_name</a></p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="../create-resources.html">Créer des ressources</a></span>
+  <span class="next"><a href="existing-resources.html">Ressources existantes</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../../_/js/site.js"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+<script src="../../../_/js/vendor/lunr.js"></script>
+<script src="../../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../../.." data-snippet-length="100" data-stylesheet="../../../_/css/search.css"></script>
+<script async src="../../../search-index.js"></script>
+  </body>
+</html>

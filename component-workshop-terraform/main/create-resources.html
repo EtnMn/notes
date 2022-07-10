@@ -6,6 +6,7 @@
     <title>Créer des ressources Azure :: Notes</title>
     <link rel="canonical" href="https://menou.fr/notes/component-workshop-terraform/main/create-resources.html">
     <link rel="prev" href="setup.html">
+    <link rel="next" href="advanced-terraform/backend.html">
     <meta name="description" content="Création de ressources dans Azure.">
     <meta name="generator" content="Antora 3.0.1">
     <link rel="stylesheet" href="../../_/css/site.css">
@@ -56,6 +57,19 @@
   </li>
   <li class="nav-item is-current-page" data-depth="1">
     <a class="nav-link" href="create-resources.html">Créer des ressources</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="advanced-terraform/backend.html">Backend</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="advanced-terraform/existing-resources.html">Ressources existantes</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="advanced-terraform/modules.html">Les modules</a>
   </li>
 </ul>
   </li>
@@ -191,7 +205,7 @@ Pour une question de performance, il est préférable de travailler depuis le r�
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-terraform hljs" data-lang="terraform">resource "azurerm_resource_group" "t-resource-group" { <i class="conum" data-value="1"></i><b>(1)</b> <i class="conum" data-value="2"></i><b>(2)</b>
   name     = "rg-workshop"                             <i class="conum" data-value="3"></i><b>(3)</b>
-  location = "West Europe"                             <i class="conum" data-value="4"></i><b>(4)</b>
+  location = "westeurope"                              <i class="conum" data-value="4"></i><b>(4)</b>
 }</code></pre>
 </div>
 </div>
@@ -328,7 +342,7 @@ azurerm_resource_group.t-resource-group: Creation complete after 1s [id=/subscri
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-terraform hljs" data-lang="terraform">resource "azurerm_resource_group" "t-resource-group" { <i class="conum" data-value="1"></i><b>(1)</b> <i class="conum" data-value="2"></i><b>(2)</b>
   name     = "rg-workshop"                             <i class="conum" data-value="3"></i><b>(3)</b>
-  location = "West Europe"                             <i class="conum" data-value="4"></i><b>(4)</b>
+  location = "westeurope"                              <i class="conum" data-value="4"></i><b>(4)</b>
 
   tags = {
     environment = "dev" <i class="conum" data-value="5"></i><b>(5)</b>
@@ -666,6 +680,7 @@ $ terraform apply -destroy</pre>
 </div>
 <nav class="pagination">
   <span class="prev"><a href="setup.html">Mise en place</a></span>
+  <span class="next"><a href="advanced-terraform/backend.html">Backend</a></span>
 </nav>
 </article>
   </div>

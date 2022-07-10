@@ -59,6 +59,19 @@
   </li>
 </ul>
   </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="advanced-terraform/backend.html">Backend</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="advanced-terraform/existing-resources.html">Ressources existantes</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="advanced-terraform/modules.html">Les modules</a>
+  </li>
+</ul>
+  </li>
 </ul>
   </nav>
 </div>
@@ -164,7 +177,7 @@ Le fichier <em>state</em> est stocké localement lors du développement. En prod
 <i class="fa icon-caution" title="MISE EN GARDE"></i>
 </td>
 <td class="content">
-Il ne faut pas éditer le fichier <strong>state</strong>.
+Il est préférable de ne pas modifier le contenu d&#8217;un fichier <strong>state</strong> manuellement, à la place privilégier la commande <code>terraform taint</code>.
 </td>
 </tr>
 </table>
