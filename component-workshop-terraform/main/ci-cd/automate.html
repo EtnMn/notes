@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Automatiser avec GitHub Actions :: Notes</title>
+    <link rel="canonical" href="https://menou.fr/notes/component-workshop-terraform/main/ci-cd/automate.html">
+    <link rel="prev" href="connect-remote-backend.html">
+    <meta name="description" content="Automatiser les déploiements avec GitHub actions">
+    <meta name="generator" content="Antora 3.0.1">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <script>var uiRootPath = '../../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <img class="navbar-item" src="../../../_/img/logo.png" alt="logo" width="32" height="32">
+      <a class="navbar-item" href="https://menou.fr/notes">Notes</a>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Rechercher">
+        </div>
+      </div>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/EtnMn">
+          <span class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" aria-labelledby="title" aria-describedby="desc" role="img" xmlns:xlink="http://www.w3.org/1999/xlink">
+              <title>My Github</title>
+              <path data-name="layer2" d="M32 0a32.021 32.021 0 0 0-10.1 62.4c1.6.3 2.2-.7 2.2-1.5v-6c-8.9 1.9-10.8-3.8-10.8-3.8-1.5-3.7-3.6-4.7-3.6-4.7-2.9-2 .2-1.9.2-1.9 3.2.2 4.9 3.3 4.9 3.3 2.9 4.9 7.5 3.5 9.3 2.7a6.93 6.93 0 0 1 2-4.3c-7.1-.8-14.6-3.6-14.6-15.8a12.27 12.27 0 0 1 3.3-8.6 11.965 11.965 0 0 1 .3-8.5s2.7-.9 8.8 3.3a30.873 30.873 0 0 1 8-1.1 30.292 30.292 0 0 1 8 1.1c6.1-4.1 8.8-3.3 8.8-3.3a11.965 11.965 0 0 1 .3 8.5 12.1 12.1 0 0 1 3.3 8.6c0 12.3-7.5 15-14.6 15.8a7.746 7.746 0 0 1 2.2 5.9v8.8c0 .9.6 1.8 2.2 1.5A32.021 32.021 0 0 0 32 0z" fill="#FFF"></path>
+              <path data-name="layer1" d="M12.1 45.9c-.1.2-.3.2-.5.1s-.4-.3-.3-.5.3-.2.6-.1c.2.2.3.4.2.5zm1.3 1.5a.589.589 0 0 1-.8-.8.631.631 0 0 1 .7.1.494.494 0 0 1 .1.7zm1.3 1.8a.585.585 0 0 1-.7-.3.6.6 0 0 1 0-.8.585.585 0 0 1 .7.3c.2.3.2.7 0 .8zm1.7 1.8c-.2.2-.5.1-.8-.1-.3-.3-.4-.6-.2-.8a.619.619 0 0 1 .8.1.554.554 0 0 1 .2.8zm2.4 1c-.1.3-.4.4-.8.3s-.6-.4-.5-.7.4-.4.8-.3c.3.2.6.5.5.7zm2.6.2c0 .3-.3.5-.7.5s-.7-.2-.7-.5.3-.5.7-.5c.4.1.7.3.7.5zm2.4-.4q0 .45-.6.6a.691.691 0 0 1-.8-.3q0-.45.6-.6c.5-.1.8.1.8.3z" fill="#FFF"></path>
+            </svg>
+          </span>
+        </a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="component-workshop-terraform" data-version="main">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../terraform-intro.html">Workshop Terraform</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../terraform-intro.html">Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../setup.html">Mise en place</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../create-resources.html">Créer des ressources</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../advanced-terraform/backend.html">Backend</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../advanced-terraform/existing-resources.html">Ressources existantes</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../advanced-terraform/modules.html">Les modules</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="connect-remote-backend.html">Connecter GitHub au backend</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="automate.html">Automatiser</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Workshop Terraform</span>
+    <span class="version">main</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="../terraform-intro.html">Workshop Terraform</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../terraform-intro.html">main</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../terraform-intro.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../terraform-intro.html">Workshop Terraform</a></li>
+    <li><a href="automate.html">Automatiser</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/EtnMn/workshop-terraform/edit/main/docs/modules/ci-cd/pages/automate.adoc">Éditer</a></div>
+  </div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Automatiser avec GitHub Actions</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Les <em>GitHub actions</em> permettent d&#8217;automatiser des <em>workflows</em> et notamment les <em>CI/CD</em>. Dans le cadre de <em>Terraform</em> les objectifs sont :</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Valider le style et le format des fichiers</p>
+</li>
+<li>
+<p>Effectuer l&#8217;analyse du code</p>
+</li>
+<li>
+<p>Générer la planification</p>
+</li>
+<li>
+<p>Déployer la configuration</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Les actions effectuées par le <em>workflow</em> dépendent du contexte.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Un <em>push</em> sur une branche</p>
+</li>
+<li>
+<p>Une création de <em>Pull Requests</em></p>
+</li>
+<li>
+<p>Un <em>merge</em> sur la branche <code>main</code></p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Un <em>push</em> sur <code>main</code> déclencherait la mise à jour de l&#8217;infrastructure sans validation. Le fait de rendre les <em>PR</em> obligatoires pour cette branche permet d&#8217;éviter cela (<span class="menuseq"><b class="menu">Settings</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="submenu">Branches</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">Add Branch protection rule</b></span> puis <em>Require a pull request before merging</em>).
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="push"><a class="anchor" href="#push"></a>Push</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Lors d&#8217;un <em>push</em>, le but est de vérifier que les modifications du code répondent aux standards de développement et ne cassent pas l&#8217;existant.</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="_images/diag-8ebc49501c5f57bbd82dd2bb5708208d9a8236a9.svg" alt="Workflow de _push_">
+</div>
+<div class="title">Figure 1. Workflow de <em>push</em></div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Checkout</strong> : récupération du <em>repo</em> dans l&#8217;espace de travail</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yml hljs" data-lang="yml">    - name: Checkout
+      uses: actions/checkout@v3</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p><strong>Analyse de code statique</strong> : L&#8217;analyse statique du code peut être effectuée directement sur le code de configuration <em>Terraform</em>. Elle est utile pour détecter des problèmes de sécurité ou des incohérences. Ces tests ne nécessitent pas la création d&#8217;un plan d&#8217;exécution ou d&#8217;un déploiement, et s&#8217;exécutent rapidement. Ils sont généralement exécutés en premier dans le processus d&#8217;intégration continue. Différentes solutions existent : <a href="https://github.com/bridgecrewio/checkov/">Checkov</a>, Terrascan, tfsec,  Deepsource</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yml hljs" data-lang="yml">    - name: Checkov
+      id: checkov
+      uses: bridgecrewio/checkov-action@master <i class="conum" data-value="1"></i><b>(1)</b>
+      with:
+        quiet: true
+        framework: terraform
+        output_format: github_failed_only
+        soft_fail: false
+        skip_check: CKV_AZURE_35,CKV2_AZURE_8,CKV2_AZURE_18,CKV2_AZURE_1,CKV2_AZURE_21 <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><a href="https://github.com/bridgecrewio/checkov-action">Checkov GitHub action</a></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Ignorer certaines recommandations</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Installation de la <strong>CLI Terraform</strong></p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yml hljs" data-lang="yml">    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+      with:
+        terraform_version: '&gt;=1.2.1'</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p><strong>Mise en forme</strong> : Vérifie que les fichiers sont correctement formatés</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yml hljs" data-lang="yml">    - name: Terraform Format
+      id: fmt
+      run: terraform fmt -check <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>-check</code> retourne un code d&#8217;erreur si le format n&#8217;est pas correct</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p><strong>Init</strong> : Initialisation de la configuration</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yml hljs" data-lang="yml">    - name: Terraform Init
+      id: init
+      env:
+        ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+        ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+        ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+      run: terraform init -input=false -no-color <i class="conum" data-value="1"></i><b>(1)</b> <i class="conum" data-value="2"></i><b>(2)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><code>-input=false</code> Lève une erreur si une entrée est attendue</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td><code>-no-color</code> évite la mise en forme qui est mal gérée par <em>GitHub</em></td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p><strong>Validate</strong> : Validation de la configuration (utilisation d&#8217;une propriété obsolète&#8230;&#8203;)</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yml hljs" data-lang="yml">    - name: Terraform Validate
+      id: validate
+      run: terraform validate -no-color <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="pull-request"><a class="anchor" href="#pull-request"></a>Pull request</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Pour une <em>Pull request</em> on ajoute la génération du <em>plan</em> ainsi que la génération d&#8217;une synthèse directement dans la <em>PR</em>.</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="_images/diag-6c2be0df6598e7ae13e38048d2a2beb6f7786ea3.svg" alt="Workflow d&#8217;une _PR_">
+</div>
+<div class="title">Figure 2. Workflow d&#8217;une <em>PR</em></div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Plan</strong> : génération du <em>plan</em></p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yml hljs" data-lang="yml">    - name: Terraform Plan
+      id: plan
+      env:
+        ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+        ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+        ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+      if: github.event_name == 'pull_request' || github.ref == 'refs/heads/main' &amp;&amp; github.event_name == 'push' <i class="conum" data-value="1"></i><b>(1)</b>
+      run: terraform plan -out=tfplan -no-color -input=false
+&lt;.&gt; Etape exécutée lors d'une _PR_ ou d'un _push_ sur `main`</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p><strong>Commenter la PR</strong> : génération d&#8217;une synthèse dans les commentaires de la <em>PR</em></p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yml hljs" data-lang="yml">    - name: add-plan-comment
+      id: comment
+      uses: actions/github-script@v3
+      if: github.event_name == 'pull_request' &amp;&amp; (success() || failure()) <i class="conum" data-value="1"></i><b>(1)</b>
+      env:
+        PLAN: "terraform\n${{ steps.plan.outputs.stdout }}" <i class="conum" data-value="2"></i><b>(2)</b>
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }} <i class="conum" data-value="3"></i><b>(3)</b>
+        script: |
+          const output =`#### Checkov 🧪\`${{ steps.checkov.outcome }}\`
+          #### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
+          #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
+          #### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
+          #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
+
+          &lt;details&gt;&lt;summary&gt;Show Checkov Results&lt;/summary&gt;
+
+          \`\`\`\n
+          ${process.env.CHECKOV_RESULTS}
+          \`\`\`
+
+          &lt;/details&gt;
+
+          &lt;details&gt;&lt;summary&gt;Show Plan&lt;/summary&gt;
+
+          \`\`\`\n
+          ${process.env.PLAN}
+          \`\`\`
+
+          &lt;/details&gt;
+
+          *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Workflow: \`${{ github.workflow }}\`*`;
+
+          github.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: output
+          })</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Etape exécutée même si les étapes précédentes ont échoué</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Sortie de l&#8217;étape <em>plan</em></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Authentification avec token pré existant pour pouvoir commenter la <em>PR</em></td>
+</tr>
+</table>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="merge-sur-main"><a class="anchor" href="#merge-sur-main"></a>Merge sur main</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>La validation de la <em>PR</em> génère un <em>push</em> sur la branche cible. Dans le cas de la branche <code>main</code>, on effectue la mise à jour de l&#8217;infrastructure.</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="_images/diag-bd0349d285d64633df649f6128231baa34b01987.svg" alt="Workflow d&#8217;un merge sur `main`">
+</div>
+<div class="title">Figure 3. Workflow d&#8217;un merge sur <code>main</code></div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Apply</strong> : mise à jour de l&#8217;infrastructure</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yml hljs" data-lang="yml">    - name: Terraform Apply
+      if: github.ref == 'refs/heads/main' &amp;&amp; github.event_name == 'push'
+      env:
+        ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+        ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+        ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+      run: terraform apply -input=false tfplan</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-caution" title="MISE EN GARDE"></i>
+</td>
+<td class="content">
+En production il est conseillé de mettre en place une <a href="https://docs.github.com/en/enterprise/2.16/admin/developer-workflow/configuring-protected-branches-and-required-status-checks">règle de protection</a> sur la branche pour confirmer les déploiements.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="connect-remote-backend.html">Connecter GitHub au backend</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../../_/js/site.js"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+<script src="../../../_/js/vendor/lunr.js"></script>
+<script src="../../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../../.." data-snippet-length="100" data-stylesheet="../../../_/css/search.css"></script>
+<script async src="../../../search-index.js"></script>
+  </body>
+</html>

@@ -73,6 +73,16 @@
   </li>
 </ul>
   </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="ci-cd/connect-remote-backend.html">Connecter GitHub au backend</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="ci-cd/automate.html">Automatiser</a>
+  </li>
+</ul>
+  </li>
 </ul>
   </nav>
 </div>
@@ -133,7 +143,7 @@
 <p>Le <a href="https://registry.terraform.io/providers/hashicorp/azurerm"><em>Provider Azure</em></a> permet de gérer les infrastructures <em>Azure</em> en utilisant l&#8217;API <em>ARM</em>. Le bloc <code>required_providers</code> permet, quant à lui, de forcer les versions utilisées.</p>
 </div>
 <div class="listingblock">
-<div class="title">versions.tf</div>
+<div class="title">main.tf</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-terraform hljs" data-lang="terraform"># Configuration de terraform
 terraform {                     <i class="conum" data-value="1"></i><b>(1)</b>
@@ -241,7 +251,7 @@ Pour une question de performance, il est préférable de travailler depuis le r�
 <pre>📒 workshop-terraform
   📄 .terraform.lock.hcl <i class="conum" data-value="1"></i><b>(1)</b>
   📄 resource-group.tf
-  📄 versions.tf
+  📄 main.tf
   📂 .terraform
     📂 providers <i class="conum" data-value="2"></i><b>(2)</b></pre>
 </div>
@@ -675,6 +685,18 @@ resource "azurerm_storage_container" "t-storage-account-container" { <i class="c
 <pre>$ terraform plan -destroy
 $ terraform apply -destroy</pre>
 </div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+il est également possible d&#8217;utiliser l&#8217;alias <code>terraform destroy</code>
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>

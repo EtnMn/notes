@@ -72,6 +72,16 @@
   </li>
 </ul>
   </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../ci-cd/connect-remote-backend.html">Connecter GitHub au backend</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../ci-cd/automate.html">Automatiser</a>
+  </li>
+</ul>
+  </li>
 </ul>
   </nav>
 </div>
@@ -134,27 +144,32 @@
 <p>Le <em>remote state</em> est généralement stocké dans un <em>resource group</em> distinct de celui utilisé pour héberger l&#8217;infrastructure. Le script suivant permet de réaliser une création classique d&#8217;un compte de stockage :</p>
 </div>
 <div class="listingblock">
-<div class="title">create-backend.ps1</div>
+<div class="title">create-backend.sh</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-powershell hljs" data-lang="powershell">$RESOURCE_GROUP_NAME="rg-workshop-state";
-$LOCATION="westeurope";
-$TF_STORAGE_ACCOUNT="ststate" + (Get-Random -Minimum 1000 -Maximum 9999);
-$CONTAINER_NAME="tfstate";
-$LOCK_NAME="delete-lock";
-az group create --name $RESOURCE_GROUP_NAME --location $LOCATION;
-az storage account create `
-  --resource-group $RESOURCE_GROUP_NAME `
-  --name $TF_STORAGE_ACCOUNT `
-  --sku Standard_LRS `
-  --allow-blob-public-access false `
-  --encryption-services blob; <i class="conum" data-value="1"></i><b>(1)</b> <i class="conum" data-value="2"></i><b>(2)</b> <i class="conum" data-value="3"></i><b>(3)</b>
-az storage account blob-service-properties update --account-name $TF_STORAGE_ACCOUNT `
-    --resource-group $RESOURCE_GROUP_NAME `
-    --enable-delete-retention true `
-    --delete-retention-days 7 <i class="conum" data-value="4"></i><b>(4)</b>
-$ACCOUNT_KEY=$(az storage account keys list --resource-group $RESOURCE_GROUP_NAME --account-name $TF_STORAGE_ACCOUNT --query '[0].value' -o tsv); <i class="conum" data-value="5"></i><b>(5)</b>
-az storage container create --name $CONTAINER_NAME --account-name $TF_STORAGE_ACCOUNT --account-key $ACCOUNT_KEY;
-az lock create --name $LOCK_NAME --resource-group $RESOURCE_GROUP_NAME --lock-type CanNotDelete --resource-type Microsoft.Storage/storageAccounts  --resource $TF_STORAGE_ACCOUNT; <i class="conum" data-value="6"></i><b>(6)</b></code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">ENV=Prod
+LOCATION=westeurope
+RESOURCE_GROUP_NAME=rg-workshopstate-${ENV,,}-$LOCATION
+TF_STORAGE_ACCOUNT=ststate$RANDOM
+CONTAINER_NAME=tfstate
+LOCK_NAME=delete-lock
+
+az group create --name $RESOURCE_GROUP_NAME --location $LOCATION
+az storage account create \
+  --resource-group $RESOURCE_GROUP_NAME \
+  --name $TF_STORAGE_ACCOUNT \
+  --sku Standard_LRS \
+  --allow-blob-public-access false \
+  --tags 'ApplicationName=Terraform' 'Env=Prod'
+  --encryption-services blob <i class="conum" data-value="1"></i><b>(1)</b> <i class="conum" data-value="2"></i><b>(2)</b> <i class="conum" data-value="3"></i><b>(3)</b> <i class="conum" data-value="4"></i><b>(4)</b>
+
+az storage account blob-service-properties update --account-name $TF_STORAGE_ACCOUNT \
+    --resource-group $RESOURCE_GROUP_NAME \
+    --enable-delete-retention true \
+    --delete-retention-days 7 <i class="conum" data-value="5"></i><b>(5)</b>
+
+ACCOUNT_KEY=$(az storage account keys list --resource-group $RESOURCE_GROUP_NAME --account-name $TF_STORAGE_ACCOUNT --query '[0].value' -o tsv) <i class="conum" data-value="6"></i><b>(6)</b>
+az storage container create --name $CONTAINER_NAME --account-name $TF_STORAGE_ACCOUNT --account-key $ACCOUNT_KEY
+az lock create --name $LOCK_NAME --resource-group $RESOURCE_GROUP_NAME --lock-type CanNotDelete --resource-type Microsoft.Storage/storageAccounts  --resource $TF_STORAGE_ACCOUNT <i class="conum" data-value="7"></i><b>(7)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -169,18 +184,22 @@ az lock create --name $LOCK_NAME --resource-group $RESOURCE_GROUP_NAME --lock-ty
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Chiffrement des <em>blobs</em></td>
+<td>Création des <em>tags</em></td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>Activation du <em>soft delete</em></td>
+<td>Chiffrement des <em>blobs</em></td>
 </tr>
 <tr>
 <td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>Récupération de la clé d&#8217;accès au <em>storage account</em></td>
+<td>Activation du <em>soft delete</em></td>
 </tr>
 <tr>
 <td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Récupération de la clé d&#8217;accès au <em>storage account</em></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="7"></i><b>7</b></td>
 <td>Empêcher la suppression du <em>storage account</em></td>
 </tr>
 </table>
@@ -206,7 +225,7 @@ D&#8217;autres personnalisations peuvent être envisagées pour <a href="https:/
 <p>Pour lier le <em>backend</em> à la configuration, il faut utiliser le bloc <code>terraform</code>. Les valeurs à renseigner dépendent du <a href="https://www.terraform.io/language/settings/backends/azurerm#example-configuration">type d&#8217;authentification</a> (<em>Azure CLI, Managed Identity, Access key&#8230;&#8203;</em>). Le code ci-dessous présente la configuration pour une authentification via <em>Azure CLI</em> ou <em>Service Principal</em> :</p>
 </div>
 <div class="listingblock">
-<div class="title">version.tf</div>
+<div class="title">main.tf</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-terraform hljs" data-lang="terraform"># Configuration de terraform
 terraform {
@@ -304,7 +323,7 @@ La configuration du <em>backend</em> ne supporte pas l&#8217;interpolation.
 <p>Dans la configuration, le <em>workspace</em> est accessible via la variable <code>terraform.workspace</code>. Dans l&#8217;exemple suivant, le nom du <em>workspace</em> est associé au nom du <em>resource group</em> :</p>
 </div>
 <div class="listingblock">
-<div class="title">version.tf</div>
+<div class="title">main.tf</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-terraform hljs" data-lang="terraform"># Déclaration des valeurs locales
 locals { <i class="conum" data-value="1"></i><b>(1)</b>

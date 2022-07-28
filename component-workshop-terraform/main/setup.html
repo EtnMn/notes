@@ -73,6 +73,16 @@
   </li>
 </ul>
   </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="ci-cd/connect-remote-backend.html">Connecter GitHub au backend</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="ci-cd/automate.html">Automatiser</a>
+  </li>
+</ul>
+  </li>
 </ul>
   </nav>
 </div>
@@ -131,9 +141,6 @@
 <li>
 <p><em>VS Code</em></p>
 </li>
-<li>
-<p><a href="https://docs.microsoft.com/fr-fr/cli/azure/install-azure-cli-windows?tabs=azure-cli"><em>Azure CLI</em></a></p>
-</li>
 </ul>
 </div>
 </div>
@@ -175,7 +182,7 @@
 <p>A l&#8217;issue de l&#8217;installation, il faut renseigner les informations du compte utilisateur de la distribution.</p>
 </div>
 <div class="literalblock">
-<div class="title">Exécuter la distribution par défaut.</div>
+<div class="title">Exécuter la distribution par défaut</div>
 <div class="content">
 <pre>$ wsl</pre>
 </div>
@@ -191,6 +198,20 @@ Il est possible d&#8217;accéder rapidement aux fichiers de la distribution <em>
 </td>
 </tr>
 </table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="azure-cli"><a class="anchor" href="#azure-cli"></a>Azure CLI</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><em>Azure CLI</em> est une interface en ligne de commande multiplateforme permettant de se connecter à Azure et d’exécuter des commandes d’administration sur les ressources Azure. Elle est installée Azure CLI localement. Même si elle est déjà installé sur le poste, il est préférable de faire également <a href="https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-linux?pivots=apt">l&#8217;installation</a> pour l&#8217;environnement <em>WSL</em>.</p>
+</div>
+<div class="literalblock">
+<div class="title">Installation d'<em>Azure CLI</em> pour <em>Ubuntu</em></div>
+<div class="content">
+<pre>$ curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash</pre>
+</div>
 </div>
 </div>
 </div>
